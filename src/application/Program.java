@@ -1,7 +1,6 @@
 package src.application;
 
-import src.model.Department;
-import src.model.Seller;
+import src.model.entities.Seller;
 
 import java.time.LocalDate;
 
