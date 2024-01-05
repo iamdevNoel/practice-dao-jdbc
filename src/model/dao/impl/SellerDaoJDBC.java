@@ -1,6 +1,5 @@
 package src.model.dao.impl;
 
-import src.db.DB;
 import src.db.DbException;
 import src.model.entities.Department;
 import src.model.entities.Seller;
@@ -77,7 +76,22 @@ public class SellerDaoJDBC implements src.model.dao.SellerDao {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement preparedStatement;
 
+        try {
+            preparedStatement = connectionDB.prepareStatement(
+                    "DELETE FROM seller " +
+                        "WHERE Id = ?"
+            );
+            preparedStatement.setInt(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new DbException("Id inserted does not exist, therefore cannot be deleted");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
     }
 
     @Override
